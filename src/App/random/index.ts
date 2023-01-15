@@ -35,8 +35,7 @@ export class Random extends Application {
     this.planeProgram = this.programLoader.load(this.gl, planeVS, planeFS);
 
     this.randomProgram = this.programLoader.load(this.gl, screenVS, randomcolorFS);
-  }
-  public setup = async () => {
+
     this.gl.getExtension('EXT_color_buffer_float'); // suport RGBA32F format fot framebuffer
 
     this.gl.useProgram(this.planeProgram);
@@ -79,7 +78,8 @@ export class Random extends Application {
     this.gl.enableVertexAttribArray(1);
     // reset
     this.gl.bindVertexArray(null);
-
+  }
+  public setup = async () => {
     // https://registry.khronos.org/OpenGL/specs/es/3.0/es_spec_3.0.pdf#page=143&zoom=100,168,666 renderable texture format 
     // 'EXT_color_buffer_float' extension need to be enabled if used for render target
     const buffer = this.buildTexture(this.BUFFER_UNIT,this.RESOLUTION,this.RESOLUTION,null,this.gl.RGBA32F,this.gl.RGBA,
@@ -88,26 +88,26 @@ export class Random extends Application {
     // comparation of render random color
 
     // fill data in CPU side
-    // const data = new Float32Array(this.RESOLUTION*this.RESOLUTION*4);
-    // for(let i =0;i<this.RESOLUTION;i++){
-    //   for(let j = 0;j<this.RESOLUTION;j++){
-    //     data[i*this.RESOLUTION*4+j*4] = Math.random();
-    //     data[i*this.RESOLUTION*4+j*4+1] = Math.random();
-    //     data[i*this.RESOLUTION*4+j*4+2] = Math.random();
-    //   }
-    // } 
-    // this.gl.activeTexture(this.gl.TEXTURE0 + this.DISPLACEMENTMAP_UNIT);
-    // this.gl.bindTexture(this.gl.TEXTURE_2D, buffer);
-    // this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA32F, this.RESOLUTION, this.RESOLUTION, 0, this.gl.RGBA, this.gl.FLOAT, data);
+    const data = new Float32Array(this.RESOLUTION*this.RESOLUTION*4);
+    for(let i =0;i<this.RESOLUTION;i++){
+      for(let j = 0;j<this.RESOLUTION;j++){
+        data[i*this.RESOLUTION*4+j*4] = Math.random();
+        data[i*this.RESOLUTION*4+j*4+1] = Math.random();
+        data[i*this.RESOLUTION*4+j*4+2] = Math.random();
+      }
+    } 
+    this.gl.activeTexture(this.gl.TEXTURE0 + this.BUFFER_UNIT);
+    this.gl.bindTexture(this.gl.TEXTURE_2D, buffer);
+    this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA32F, this.RESOLUTION, this.RESOLUTION, 0, this.gl.RGBA, this.gl.FLOAT, data);
 
     // fill data in GPU side
-    const randomFramebuffer = this.buildFramebuffer(buffer);
-    this.gl.bindVertexArray(this.vao);
-    this.gl.useProgram(this.randomProgram);
-    this.gl.bindFramebuffer(this.gl.FRAMEBUFFER,randomFramebuffer);
-    this.gl.drawElements(this.gl.TRIANGLES, this.planeGeometry.indices.length, this.gl.UNSIGNED_SHORT, 0);
-    this.gl.bindFramebuffer(this.gl.FRAMEBUFFER,null);
-    this.gl.bindVertexArray(null);
+    // const randomFramebuffer = this.buildFramebuffer(buffer);
+    // this.gl.bindVertexArray(this.vao);
+    // this.gl.useProgram(this.randomProgram);
+    // this.gl.bindFramebuffer(this.gl.FRAMEBUFFER,randomFramebuffer);
+    // this.gl.drawElements(this.gl.TRIANGLES, this.planeGeometry.indices.length, this.gl.UNSIGNED_SHORT, 0);
+    // this.gl.bindFramebuffer(this.gl.FRAMEBUFFER,null);
+    // this.gl.bindVertexArray(null);
   }
   protected update = (time: number) => {
     const { clientWidth, clientHeight } = this.canvas;
