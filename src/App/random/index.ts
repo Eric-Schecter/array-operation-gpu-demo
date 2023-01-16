@@ -5,7 +5,7 @@ import screenVS from './shader/screen.vs';
 import planeVS from './shader/plane.vs';
 import planeFS from './shader/plane.fs';
 import randomcolorFS from './shader/random_color.fs';
-import { Camera } from "./camera";
+import { Camera } from "../gl/camera";
 
 // a basic demo to show GPU and CPU random number generation
 export class Random extends Application {
