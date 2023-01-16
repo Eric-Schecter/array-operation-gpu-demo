@@ -1,6 +1,6 @@
 import { Application } from "../gl";
 import { vec3, mat4 } from 'gl-matrix'
-import { PlaneGeometry } from './planeGeometry';
+import { PlaneGeometry } from '../gl/planeGeometry';
 import screenVS from './shader/screen.vs';
 import planeVS from './shader/plane.vs';
 import planeFS from './shader/plane.fs';
