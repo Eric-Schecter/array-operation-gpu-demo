@@ -82,7 +82,7 @@ export class Random extends Application {
   public setup = async () => {
     // https://registry.khronos.org/OpenGL/specs/es/3.0/es_spec_3.0.pdf#page=143&zoom=100,168,666 renderable texture format 
     // 'EXT_color_buffer_float' extension need to be enabled if used for render target
-    const buffer = this.buildTexture(this.BUFFER_UNIT,this.RESOLUTION,this.RESOLUTION,null,this.gl.RGBA32F,this.gl.RGBA,
+    const bufferTexture = this.buildTexture(this.BUFFER_UNIT,this.RESOLUTION,this.RESOLUTION,null,this.gl.RGBA32F,this.gl.RGBA,
       this.gl.FLOAT,this.gl.CLAMP_TO_EDGE,this.gl.CLAMP_TO_EDGE,this.gl.LINEAR,this.gl.LINEAR);
 
     // comparation of render random color
@@ -97,11 +97,11 @@ export class Random extends Application {
       }
     } 
     this.gl.activeTexture(this.gl.TEXTURE0 + this.BUFFER_UNIT);
-    this.gl.bindTexture(this.gl.TEXTURE_2D, buffer);
+    this.gl.bindTexture(this.gl.TEXTURE_2D, bufferTexture);
     this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA32F, this.RESOLUTION, this.RESOLUTION, 0, this.gl.RGBA, this.gl.FLOAT, data);
 
     // fill data in GPU side
-    // const randomFramebuffer = this.buildFramebuffer(buffer);
+    // const randomFramebuffer = this.buildFramebuffer(bufferTexture);
     // this.gl.bindVertexArray(this.vao);
     // this.gl.useProgram(this.randomProgram);
     // this.gl.bindFramebuffer(this.gl.FRAMEBUFFER,randomFramebuffer);

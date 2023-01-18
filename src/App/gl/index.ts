@@ -7,7 +7,7 @@ export abstract class Application {
   protected gl!: WebGL2RenderingContext;
   protected programLoader = new ProgramLoader();
   private timer = 0;
-  private clock = new Clock();
+  protected clock = new Clock();
   private extensions = [];
   constructor(protected container: HTMLElement) {
     this.initWindow();
@@ -57,6 +57,9 @@ export abstract class Application {
   }
   protected buildFramebuffer = (attachment:WebGLTexture) => {
     const framebuffer = this.gl.createFramebuffer() as WebGLFramebuffer;
+    if(!this.gl.checkFramebufferStatus(this.gl.FRAMEBUFFER)){
+      console.log('create framebuffer failed');
+    }
     this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, framebuffer);
     this.gl.framebufferTexture2D(this.gl.FRAMEBUFFER, this.gl.COLOR_ATTACHMENT0, this.gl.TEXTURE_2D, attachment, 0);
     return framebuffer;
