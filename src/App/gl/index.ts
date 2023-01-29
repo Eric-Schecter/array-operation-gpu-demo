@@ -8,8 +8,7 @@ export abstract class Application {
   protected programLoader = new ProgramLoader();
   private timer = 0;
   protected clock = new Clock();
-  private extensions = [];
-  constructor(protected container: HTMLElement) {
+  constructor(protected container: HTMLElement,private options:WebGLContextAttributes = {},private extensions:string[] = []) {
     this.initWindow();
     this.initWebGL();
     this.clock.reset();
@@ -25,7 +24,7 @@ export abstract class Application {
     this.container.appendChild(this.canvas);
   }
   private initWebGL = () => {
-    this.gl = throwErrorIfInvalid(this.canvas.getContext('webgl2'));
+    this.gl = throwErrorIfInvalid(this.canvas.getContext('webgl2',this.options));
     this.extensions.forEach(extension => {
       const ext = this.gl.getExtension(extension);
       if (!ext) {

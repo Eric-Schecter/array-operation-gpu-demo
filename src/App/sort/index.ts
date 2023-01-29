@@ -3,7 +3,7 @@ import screenVS from './shader/screen.vs';
 import oddevenFS from './shader/oddeven.fs';
 
 // a basic demo to show GPU and CPU random number generation
-export class Sort extends Application {
+export class SortOpe extends Application {
   private vao!: WebGLVertexArrayObject;
   private oddevenProgram: WebGLProgram;
   private RESOLUTION = 256;
@@ -17,12 +17,10 @@ export class Sort extends Application {
     0, 1, 2, 2, 1, 3
   ];
 
-  constructor(container: HTMLDivElement) {
-    super(container);
+  constructor(container: HTMLDivElement,options?:WebGLContextAttributes,extensions?:string[]) {
+    super(container,options,extensions);
 
     this.oddevenProgram = this.programLoader.load(this.gl, screenVS, oddevenFS);
-
-    this.gl.getExtension('EXT_color_buffer_float'); // suport RGBA32F format fot framebuffer
 
     // init
     this.vao = this.gl.createVertexArray() as WebGLVertexArrayObject;
