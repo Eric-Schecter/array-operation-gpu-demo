@@ -66,6 +66,7 @@ export class SortOpe extends Application {
     this.clock.update();
     rawdata.sort((pre, curr) => pre - curr);
     this.clock.update();
+    // console.log(`result:${rawdata}`);
     console.log(`cpu sort:${this.clock.current * 1000}ms`);
   }
   private oddevenSort = (rawdata: number[]) => {
@@ -118,6 +119,7 @@ export class SortOpe extends Application {
     const arrBuffer = new Float32Array(this.RESOLUTION*this.RESOLUTION*Float32Array.BYTES_PER_ELEMENT);
     this.gl.readPixels(0,0,this.RESOLUTION,this.RESOLUTION,this.gl.RGBA,this.gl.FLOAT,arrBuffer);
     const res = Array.from(arrBuffer).filter((d,i)=>i%4===0);
+    // console.log(`result:${res}`);
     console.log(`odd even sort:${this.clock.current * 1000}ms`);
 
     this.gl.bindVertexArray(null);

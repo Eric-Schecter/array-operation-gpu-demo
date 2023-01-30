@@ -6,6 +6,7 @@ import { App } from './App';
 import { EveryOpe } from './App/every';
 import {FillOpe} from './App/fill';
 import {SortOpe} from './App/sort';
+import {ReduceOpe} from './App/reduce';
 import { HashRouter, Route, Switch } from 'react-router-dom';
 import { Application } from './App/gl';
 
@@ -21,8 +22,8 @@ const routes:RouteType[] = [
   { path: '/', app: FillOpe },
   { path: '/fill', app: FillOpe},
   { path: '/every', app: EveryOpe,options:{preserveDrawingBuffer:false}},
-  // { path: '/reduce', app: ReduceOpe },
-  { path: '/sort', app: SortOpe },
+  { path: '/reduce', app: ReduceOpe,extensions:['EXT_color_buffer_float'] },
+  { path: '/sort', app: SortOpe,extensions:['EXT_color_buffer_float'] },
 ]
 
 ReactDOM.render(

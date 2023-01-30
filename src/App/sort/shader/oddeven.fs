@@ -29,7 +29,7 @@ void main(){
     }
     
     float partnerIndex=index + compare;
-    vec2 partnerUV=vec2(vec2(floor(mod(partnerIndex,u_resolution.x)),mod(floor(partnerIndex/u_resolution.x),u_resolution.y))+vec2(0.5))/u_resolution;
+    vec2 partnerUV=(vec2(floor(mod(partnerIndex,u_resolution.x)),mod(floor(partnerIndex/u_resolution.x),u_resolution.y))+vec2(0.5))/u_resolution;
     vec4 partner=texture(u_buffer,partnerUV); 
     fColor=(self.x*compare<partner.x*compare)?self:partner;
 }
